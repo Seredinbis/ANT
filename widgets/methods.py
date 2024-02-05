@@ -109,6 +109,8 @@ class Methods:
         pass
 
     def close(self):
+        if self.master.name == 'app':
+            self.reset()
         self.master.after(200, self.master.destroy)
 
     def scl_val(self, val):

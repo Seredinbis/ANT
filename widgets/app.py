@@ -7,6 +7,7 @@ from artnet.widget_enter import CheckData
 class Window(Toplevel):
     def __init__(self, master=None):
         super().__init__(master)
+        self.name = 'settings'
         self.title('Ethernet settings')
         self.geometry('403x251+400+380')
         self.resizable(False, False)
@@ -26,6 +27,7 @@ class Window(Toplevel):
 class App(Tk):
     def __init__(self):
         super().__init__()
+        self.name = 'app'
         self.title('ANT v 1.0')
         self.geometry('575x355+300+300')
         self.resizable(False, False)
@@ -40,7 +42,7 @@ class App(Tk):
         self._scale_value = 0
         self.not_null_value_address = set()
         self.style = ttk.Style()
-        self.style.configure('TLabel', bg='#A2A7A2', font='Tahoma 20', fg='#4D4C4C')
+        self.style.configure('TLabel', background='#A2A7A2', font='Tahoma 20', foreground='#4D4C4C',)
         self.universe_label = ttk.Label()
         self.address_label = ttk.Label()
         self.value_label = ttk.Label()
