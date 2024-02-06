@@ -59,7 +59,6 @@ class Methods:
 
     def set_val(self):
         self.master.scale_value = self.master.value
-        self.master.undr.set(self.master.scale_value)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
         if self.master.scale_value == 0:
@@ -74,7 +73,6 @@ class Methods:
         self.master.value = 0
         self.zero()
         self.master.data.universe = self.master.universe - 1
-        self.master.data.universe = self.master.universe - 1
         for adr in self.master.not_null_value_address:
             self.master.data.send({adr: 0})
         self.master.not_null_value_address.clear()
@@ -82,7 +80,7 @@ class Methods:
 
     def zero(self):
         self.master.scale_value = 0
-        self.master.undr.set(0)
+        # self.master.undr.set(0)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
         self.master.not_null_value_address.discard(self.master.address)
@@ -98,7 +96,6 @@ class Methods:
 
     def settings(self):
         self.master.after(200, self.master.create_set_win())
-
         pass
 
     def default(self):
