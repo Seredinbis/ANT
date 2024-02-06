@@ -1,6 +1,7 @@
 /venv
 .env
 .idea
-/pycache
 .DS_Store
 *.log
+__pychache__/
+*.pyc
