@@ -50,7 +50,7 @@ class CheckData(DataValidator):
         if self.__pass:
             self.buffer = Buffer(self.universe, self.subnet, self.net)
             self.socket = SocketSend()
-            self.p = Process(target=self.socket.send, args=(self.buffer.get_buffer(),))
+            self.p = Process(target=self.socket.send, args=(self.buffer.buffer,))
             self.__pass = False
 
     def send(self, values: Dict[int, int]) -> Optional[str]:
