@@ -5,6 +5,7 @@ from artnet.widget_enter import CheckData
 
 
 class Window(Toplevel):
+
     def __init__(self, master=None, geom: str = None):
         super().__init__(master)
         self.name = 'settings'
@@ -24,6 +25,7 @@ class Window(Toplevel):
 
 
 class App(Tk):
+
     """Класс основного окна. Хранит основные переменные: universe, address, scale_value. Содержит методы создания
     окон расширения: create_set_win(). Хранит вспомогательные переменные: value"""
     def __init__(self):
@@ -73,7 +75,7 @@ class App(Tk):
         CustomButton(self, picture='zer', function='zero', x=200, y=290)
         CustomButton(self, picture='ful', function='full', x=273, y=290)
         CustomButton(self, picture='sets', function='settings', x=461, y=290)
-        CustomButton(self, picture='pow', function='close', x=511, y=290)
+        CustomButton(self, picture='pow', function='close', x=511, y=29)
         CustomFader(self, picture='rol', function='scl_val', x=370, y=215)
         pass
 

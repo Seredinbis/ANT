@@ -3,6 +3,7 @@ from methods import Methods
 
 
 class CustomFader(Label, Methods):
+
     def __init__(self, master, picture: str, function=None, x=None, y=None, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
         self.function = function
