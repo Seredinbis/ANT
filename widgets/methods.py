@@ -117,3 +117,21 @@ class Methods:
             self.master.not_null_value_address.discard(self.master.address)
         else:
             self.master.not_null_value_address.add(self.master.address)
+
+    def color_picker(self):
+        pass
+
+    def patch_manager(self):
+        pass
+
+    def target_move(self):
+        pass
+
+    def device_builder(self):
+        pass
+
+    def queue_list(self):
+        pass
+
+    def wing(self):
+        pass

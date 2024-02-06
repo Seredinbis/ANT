@@ -75,7 +75,15 @@ class App(Tk):
         CustomButton(self, picture='zer', function='zero', x=200, y=290)
         CustomButton(self, picture='ful', function='full', x=273, y=290)
         CustomButton(self, picture='sets', function='settings', x=461, y=290)
-        CustomButton(self, picture='pow', function='close', x=511, y=29)
+        CustomButton(self, picture='pow', function='close', x=511, y=290)
+
+        CustomButton(self, picture='col', function='color_picker', x=461, y=46)
+        CustomButton(self, picture='ptch', function='patch_manager', x=511, y=46)
+        CustomButton(self, picture='mov', function='target_move', x=461, y=97)
+        CustomButton(self, picture='bldr', function='device_builder', x=511, y=97)
+        CustomButton(self, picture='qlst', function='queue_list', x=461, y=148)
+        CustomButton(self, picture='wng', function='wing', x=511, y=148)
+
         CustomFader(self, picture='rol', function='scl_val', x=370, y=215)
         pass
 
