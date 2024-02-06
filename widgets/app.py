@@ -5,13 +5,14 @@ from artnet.widget_enter import CheckData
 
 
 class Window(Toplevel):
-    def __init__(self, master=None):
+
+    def __init__(self, master=None, geom: str = None):
         super().__init__(master)
-        self.title('Ethernet settings')
-        self.geometry('403x251+400+380')
+        self.name = 'settings'
+        self.geometry(geom)
         self.resizable(False, False)
         self.bg_img = PhotoImage(file='pic//bg_set.png')
-        Label(self, image=self.bg_img).pack()
+        Label(self, image=self.bg_img, border=0).pack()
         self.dif_x = 0
         self.dif_y = 0
         self.overrideredirect(True)
@@ -24,22 +25,26 @@ class Window(Toplevel):
 
 
 class App(Tk):
+
+    """Класс основного окна. Хранит основные переменные: universe, address, scale_value. Содержит методы создания
+    окон расширения: create_set_win(). Хранит вспомогательные переменные: value"""
     def __init__(self):
         super().__init__()
-        self.title('ANT v 1.0')
+        self.name = 'app'
         self.geometry('575x355+300+300')
         self.resizable(False, False)
         self.overrideredirect(True)
         self.wm_attributes('-topmost', True)
         self.bg_im = PhotoImage(file='pic//win.png')
-        Label(self, image=self.bg_im).pack()
+        Label(self, image=self.bg_im, border=0).pack()
         self.set_win = None
         self._universe = 1
         self._address = 1
         self._value = 0
         self._scale_value = 0
+        self.not_null_value_address = set()
         self.style = ttk.Style()
-        self.style.configure('TLabel', bg='#A2A7A1', font='Tahoma 20', fg='#4D4C4C')
+        self.style.configure('TLabel', background='#A2A7A2', font='Tahoma 20', foreground='#4D4C4C',)
         self.universe_label = ttk.Label()
         self.address_label = ttk.Label()
         self.value_label = ttk.Label()
@@ -50,15 +55,15 @@ class App(Tk):
 
     def create_widgets(self):
         self.universe_label.config(text='{:03d}'.format(self._universe))
-        self.universe_label.place(x=74, y=52)
+        self.universe_label.place(x=75, y=52)
         self.address_label.config(text='{:03d}'.format(self._address))
-        self.address_label.place(x=74, y=137)
+        self.address_label.place(x=75, y=137)
         self.value_label.config(text='{:03d}'.format(self._value))
-        self.value_label.place(x=74, y=222)
+        self.value_label.place(x=75, y=222)
         self.scale_value_label.config(text='{:03d}'.format(int(self._scale_value)))
-        self.scale_value_label.place(x=480, y=52)
+        self.scale_value_label.place(x=373, y=52)
         self.percent_label.config(text='{:03d}'.format(int(self._scale_value // 2.55)))
-        self.percent_label.place(x=480, y=137)
+        self.percent_label.place(x=373, y=137)
         CustomButton(self, picture='unv_up', function='unv_one', function_2='unv_ten', operator='+', x=132, y=50)
         CustomButton(self, picture='unv_dwn', function='unv_one', function_2='unv_ten', operator='-', x=25, y=50)
         CustomButton(self, picture='adr_up', function='adr_one', function_2='adr_ten', operator='+', x=132, y=135)
@@ -70,12 +75,12 @@ class App(Tk):
         CustomButton(self, picture='zer', function='zero', x=200, y=290)
         CustomButton(self, picture='ful', function='full', x=273, y=290)
         CustomButton(self, picture='sets', function='settings', x=461, y=290)
-        CustomButton(self, picture='pow', function='close', x=511, y=290)
-        CustomFader(self, picture='fdr', atr='scale_value', x=391, y=280, lnght=255)
+        CustomButton(self, picture='pow', function='close', x=511, y=29)
+        CustomFader(self, picture='rol', function='scl_val', x=370, y=215)
         pass
 
     def create_set_win(self):
-        self.set_win = Window(self)
+        Window(self, geom='403x251+400+380')
 
     @property
     def universe(self):

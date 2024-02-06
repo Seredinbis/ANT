@@ -3,5 +3,9 @@
 .idea
 .DS_Store
 *.log
+<<<<<<< HEAD
 __pycache__/
+=======
+__pychache__/
+>>>>>>> origin/jarnsorm
 *.pyc

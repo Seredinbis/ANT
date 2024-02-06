@@ -59,9 +59,12 @@ class Methods:
 
     def set_val(self):
         self.master.scale_value = self.master.value
-        self.master.undr.set(self.master.scale_value)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
+        if self.master.scale_value == 0:
+            self.master.not_null_value_address.discard(self.master.address)
+        else:
+            self.master.not_null_value_address.add(self.master.address)
         pass
 
     def reset(self):
@@ -70,15 +73,17 @@ class Methods:
         self.master.value = 0
         self.zero()
         self.master.data.universe = self.master.universe - 1
-        self.master.data.universe = self.master.universe - 1
-        self.master.data.send({self.master.address: self.master.scale_value})
+        for adr in self.master.not_null_value_address:
+            self.master.data.send({adr: 0})
+        self.master.not_null_value_address.clear()
         pass
 
     def zero(self):
         self.master.scale_value = 0
-        self.master.undr.set(0)
+        # self.master.undr.set(0)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
+        self.master.not_null_value_address.discard(self.master.address)
         pass
 
     def full(self):
@@ -86,11 +91,11 @@ class Methods:
         self.master.undr.set(255)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
+        self.master.not_null_value_address.add(self.master.address)
         pass
 
     def settings(self):
         self.master.after(200, self.master.create_set_win())
-
         pass
 
     def default(self):
@@ -101,9 +106,14 @@ class Methods:
         pass
 
     def close(self):
+        if self.master.name == 'app':
+            self.reset()
         self.master.after(200, self.master.destroy)
 
-    def scl_val(self, val):
-        self.master.scale_value = int(val)
+    def scl_val(self):
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
+        if self.master.scale_value == 0:
+            self.master.not_null_value_address.discard(self.master.address)
+        else:
+            self.master.not_null_value_address.add(self.master.address)

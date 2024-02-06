@@ -41,7 +41,7 @@ class SocketSend:
                 try:
                     self.__socket.sendto(packet, (ip_address, port))
                     logger.debug(f'Отправка пакета {packet} в сеть {ip_address, port}')
-                    time.sleep(2)
+                    time.sleep(0.2)
                 except Exception as er:
                     logger.exception(f'Ошибка отправки пакета: {er}')
 
