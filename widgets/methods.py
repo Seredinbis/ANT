@@ -110,8 +110,7 @@ class Methods:
             self.reset()
         self.master.after(200, self.master.destroy)
 
-    def scl_val(self, val):
-        self.master.scale_value = int(val)
+    def scl_val(self):
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
         if self.master.scale_value == 0:

@@ -3,9 +3,9 @@ from methods import Methods
 
 
 class CustomFader(Label, Methods):
-    def __init__(self, master, picture: str, atr=None, x=None, y=None, *args, **kwargs):
+    def __init__(self, master, picture: str, function=None, x=None, y=None, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
-        self.atr = atr
+        self.function = function
         self.x = x
         self.y = y
         self.start = self.y + 55
@@ -28,15 +28,16 @@ class CustomFader(Label, Methods):
             self.configure(image=self.img1)
         else:
             self.configure(image=self.img2)
+        getattr(self, self.function)()
 
     def coord(self, event):
         self.start = event.y + self.master.scale_value
+        print(self.start)
 
 
 class CustomButton(CustomFader):
-    def __init__(self, master, function=None, function_2=None, operator: str = None, **kwargs):
+    def __init__(self, master, function_2=None, operator: str = None, **kwargs):
         super().__init__(master, **kwargs)
-        self.function = function
         self.function_2 = function_2
         self.operator = operator
         if self.function_2 is not None:
