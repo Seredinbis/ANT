@@ -4,8 +4,18 @@ from custom_widgets import CustomButton, CustomFader
 from artnet.widget_enter import CheckData
 
 
-class Window(Toplevel):
+def singleton(cls):
+    instances = {}
 
+    def get_instance(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+
+    return get_instance
+
+
+class Window(Toplevel):
     def __init__(self, master=None, geom: str = None):
         super().__init__(master)
         self.name = 'settings'
@@ -13,8 +23,6 @@ class Window(Toplevel):
         self.resizable(False, False)
         self.bg_img = PhotoImage(file='pic//bg_set.png')
         Label(self, image=self.bg_img, border=0).pack()
-        self.dif_x = 0
-        self.dif_y = 0
         self.overrideredirect(True)
         self.create_widgets()
 
@@ -24,10 +32,11 @@ class Window(Toplevel):
         pass
 
 
+@singleton
 class App(Tk):
-
     """Класс основного окна. Хранит основные переменные: universe, address, scale_value. Содержит методы создания
     окон расширения: create_set_win(). Хранит вспомогательные переменные: value"""
+
     def __init__(self):
         super().__init__()
         self.name = 'app'
@@ -37,14 +46,14 @@ class App(Tk):
         self.wm_attributes('-topmost', True)
         self.bg_im = PhotoImage(file='pic//win.png')
         Label(self, image=self.bg_im, border=0).pack()
-        self.set_win = None
+        self.settings = None
         self._universe = 1
         self._address = 1
         self._value = 0
         self._scale_value = 0
         self.not_null_value_address = set()
         self.style = ttk.Style()
-        self.style.configure('TLabel', background='#A2A7A2', font='Tahoma 20', foreground='#4D4C4C',)
+        self.style.configure('TLabel', background='#A2A7A2', font='Tahoma 20', foreground='#4D4C4C', )
         self.universe_label = ttk.Label()
         self.address_label = ttk.Label()
         self.value_label = ttk.Label()
@@ -52,6 +61,10 @@ class App(Tk):
         self.percent_label = ttk.Label()
         self.create_widgets()
         self.data = CheckData()
+        self.shiftx, self._x, self.shifty,  self._y = 0, 0, 0, 0
+        self.flag = False
+        self.bind('<B1-Motion>', self.drag)
+        self.bind('<Button->', self.shifting)
 
     def create_widgets(self):
         self.universe_label.config(text='{:03d}'.format(self._universe))
@@ -87,8 +100,28 @@ class App(Tk):
         CustomFader(self, picture='rol', function='scl_val', x=370, y=215)
         pass
 
+    def drag(self, event):
+        if self.flag:
+            self.geometry(f'+{event.x_root - self.shiftx}+{event.y_root - self.shifty}')
+            if self.settings is not None:
+                try:
+                    self.settings.geometry(f'+{event.x_root - self.shiftx + 100}+{event.y_root - self.shifty + 80}')
+                except:
+                    pass
+
+    def shifting(self, event):
+        self._x = int(self.geometry().split('+')[1])
+        self._y = int(self.geometry().split('+')[2])
+        self.shiftx = event.x_root - self._x
+        self.shifty = event.y_root - self._y
+        if not (self._x + 370 < event.x_root < self._x + 426 and self._y + 215 < event.y_root < self._y + 325):
+            self.flag = True
+        else:
+            self.flag = False
+
     def create_set_win(self):
-        Window(self, geom='403x251+400+380')
+        self.settings = Window(self, geom=f'403x251+{int(self.geometry().split("+")[1]) + 100}+'
+                                              f'{int(self.geometry().split("+")[2]) + 80}')
 
     @property
     def universe(self):

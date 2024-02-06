@@ -33,7 +33,6 @@ class CustomFader(Label, Methods):
 
     def coord(self, event):
         self.start = event.y + self.master.scale_value
-        print(self.start)
 
 
 class CustomButton(CustomFader):
