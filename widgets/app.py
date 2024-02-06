@@ -24,8 +24,8 @@ class Window(Toplevel):
 
 
 class App(Tk):
-    '''Класс основного окна. Хранит основные переменные: universe, address, scale_value. Содержит методы создания
-    окон расширения: create_set_win(). Хранит вспомогательные переменные: value'''
+    """Класс основного окна. Хранит основные переменные: universe, address, scale_value. Содержит методы создания
+    окон расширения: create_set_win(). Хранит вспомогательные переменные: value"""
     def __init__(self):
         super().__init__()
         self.name = 'app'
