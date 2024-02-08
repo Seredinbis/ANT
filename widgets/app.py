@@ -16,6 +16,8 @@ def singleton(cls):
 
 
 class Window(Toplevel):
+    """Класс окна расширения"""
+
     def __init__(self, master=None, geom: str = None):
         super().__init__(master)
         self.name = 'settings'
@@ -45,7 +47,7 @@ class App(Tk):
         self.overrideredirect(True)
         self.wm_attributes('-topmost', True)
         self.bg_im = PhotoImage(file='pic//win.png')
-        Label(self, image=self.bg_im, border=0).pack()
+        Label(self, image=self.bg_im, border=0).place(x=0, y=0)
         self.settings = None
         self._universe = 1
         self._address = 1
@@ -61,7 +63,7 @@ class App(Tk):
         self.percent_label = ttk.Label()
         self.create_widgets()
         self.data = CheckData()
-        self.shiftx, self._x, self.shifty,  self._y = 0, 0, 0, 0
+        self.shiftx, self._x, self.shifty, self._y = 0, 0, 0, 0
         self.flag = False
         self.bind('<B1-Motion>', self.drag)
         self.bind('<Button->', self.shifting)
@@ -101,6 +103,8 @@ class App(Tk):
         pass
 
     def drag(self, event):
+        """Расчет новых координать положения она по положению курсора с поправкой на положение
+        курсора. Положение окна расширения 'Settings' статично относительно основного окна"""
         if self.flag:
             self.geometry(f'+{event.x_root - self.shiftx}+{event.y_root - self.shifty}')
             if self.settings is not None:
@@ -110,6 +114,8 @@ class App(Tk):
                     pass
 
     def shifting(self, event):
+        """Расчет положения окна, расчет поправки положения курсора относительно окна. Исключение
+        области Колеса из активной области окна (self.Flag)"""
         self._x = int(self.geometry().split('+')[1])
         self._y = int(self.geometry().split('+')[2])
         self.shiftx = event.x_root - self._x
@@ -120,8 +126,9 @@ class App(Tk):
             self.flag = False
 
     def create_set_win(self):
+        """Создание окна расширения 'Settings' с указанием координат относительно основного окна"""
         self.settings = Window(self, geom=f'403x251+{int(self.geometry().split("+")[1]) + 100}+'
-                                              f'{int(self.geometry().split("+")[2]) + 80}')
+                                          f'{int(self.geometry().split("+")[2]) + 80}')
 
     @property
     def universe(self):

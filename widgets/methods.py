@@ -1,4 +1,5 @@
 class Methods:
+    """Содержит все методы обработки и расчета переменных основного окна и окон расширений"""
     @staticmethod
     def one(val, operator):
         if operator == '+':
@@ -68,6 +69,7 @@ class Methods:
         pass
 
     def reset(self):
+        """Сбрасывает все передаваемые значения на 0 по всем потокам и адресам"""
         self.master.universe = 1
         self.master.address = 1
         self.master.value = 0
@@ -80,7 +82,6 @@ class Methods:
 
     def zero(self):
         self.master.scale_value = 0
-        # self.master.undr.set(0)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
         self.master.not_null_value_address.discard(self.master.address)
@@ -88,7 +89,6 @@ class Methods:
 
     def full(self):
         self.master.scale_value = 255
-        self.master.undr.set(255)
         self.master.data.universe = self.master.universe - 1
         self.master.data.send({self.master.address: self.master.scale_value})
         self.master.not_null_value_address.add(self.master.address)
@@ -106,6 +106,7 @@ class Methods:
         pass
 
     def close(self):
+        """Закрывает окно, вызывающее метод"""
         if self.master.name == 'app':
             self.reset()
         self.master.after(200, self.master.destroy)
